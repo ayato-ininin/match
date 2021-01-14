@@ -15,35 +15,56 @@
 
         <form method="POST" action="{{ route('register') }}">
             @csrf
-         <label for="file_photo" class="rounded-circle userProfileImg">
-        <div class="userProfileImg_description">画像をアップロード</div>
-        <i class="fas fa-camera fa-3x"></i>
-        <input type="file" id="file_photo" name="img_name">
 
-      </label>
-      <div class="userImgPreview" id="userImgPreview">
-        <img id="thumbnail" class="userImgPreview_content" accept="image/*" src="">
-        <p class="userImgPreview_text">画像をアップロード済み</p>
-      </div>
-            <div>
+
+
+             <label for="file_photo"        class="rounded-circle userProfileImg">
+             <div class="userProfileImg_description">画像をアップロード</div>
+             <i class="fas fa-camera fa-3x"></i>
+             <input type="file" id="file_photo" name="img_name">
+
+             </label>
+             <div class="userImgPreview" id="userImgPreview">
+             <img id="thumbnail" class="userImgPreview_content" accept="image/*" src="">
+             <p class="userImgPreview_text">画像をアップロード済み</p>
+             </div>
+
+
+
+            <div class="form-group @error('name')has-error @enderror">
                 <x-jet-label for="name" value="{{ __('Name') }}" />
-                <x-jet-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
+                <x-jet-input id="name" class="form-control" type="text" name="name" :value="old('name')" required autofocus autocomplete="name"  placeholder="名前を入力してください"/>
+                @error('name')
+                <span class="errorMessage">
+                {{ $message }}
+                </span>
+                @enderror
             </div>
 
-            <div class="mt-4">
+            <div class="form-group @error('email')has-error @enderror">
                 <x-jet-label for="email" value="{{ __('Email') }}" />
-                <x-jet-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required />
+                
+                <x-jet-input id="email" class="form-control" type="email" name="email" :value="old('email')" required placeholder="メールアドレスを入力してください"/>
+                @error('email')
+                 <span class="errorMessage">
+                 {{ $message }}
+                </span>
+                @enderror
             </div>
 
-            <div class="mt-4">
+            <div class="form-group @error('password')has-error @enderror">
                 <x-jet-label for="password" value="{{ __('Password') }}" />
-                <x-jet-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password" />
+                <x-jet-input id="password" class="form-control" type="password" name="password" required autocomplete="new-password" 
+                 placeholder="パスワードを入力してください"/>
             </div>
 
-            <div class="mt-4">
+            <div class="form-group">
                 <x-jet-label for="password_confirmation" value="{{ __('Confirm Password') }}" />
-                <x-jet-input id="password_confirmation" class="block mt-1 w-full" type="password" name="password_confirmation" required autocomplete="new-password" />
+                <x-jet-input id="password_confirmation" class="form-control" type="password" name="password_confirmation" required autocomplete="new-password" 
+                placeholder="パスワードを再度入力してください"/>
             </div>
+
+            
 
             @if (Laravel\Jetstream\Jetstream::hasTermsAndPrivacyPolicyFeature())
                 <div class="mt-4">
