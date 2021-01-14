@@ -1,6 +1,13 @@
 <x-guest-layout>
+    <div class="signupPage">
+  <header class="header">
+    <div>アカウントを作成</div>
+  </header>
+  <div class='container'>
     <x-jet-authentication-card>
+        
         <x-slot name="logo">
+            
             <x-jet-authentication-card-logo />
         </x-slot>
 
@@ -8,7 +15,16 @@
 
         <form method="POST" action="{{ route('register') }}">
             @csrf
+         <label for="file_photo" class="rounded-circle userProfileImg">
+        <div class="userProfileImg_description">画像をアップロード</div>
+        <i class="fas fa-camera fa-3x"></i>
+        <input type="file" id="file_photo" name="img_name">
 
+      </label>
+      <div class="userImgPreview" id="userImgPreview">
+        <img id="thumbnail" class="userImgPreview_content" accept="image/*" src="">
+        <p class="userImgPreview_text">画像をアップロード済み</p>
+      </div>
             <div>
                 <x-jet-label for="name" value="{{ __('Name') }}" />
                 <x-jet-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
