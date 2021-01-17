@@ -3,12 +3,15 @@
   <header class="header">
     <div>アカウントを作成</div>
   </header>
+  <body>
+      
+ 
   <div class='container'>
     <x-jet-authentication-card>
         
         <x-slot name="logo">
+            {{-- 写真入れてロゴにできる --}}
             
-            <x-jet-authentication-card-logo />
         </x-slot>
 
         <x-jet-validation-errors class="mb-4" />
@@ -64,6 +67,30 @@
                 placeholder="パスワードを再度入力してください"/>
             </div>
 
+            <div class="form-group">
+                <x-jet-label for="sex" value="{{ __('性別') }}" />
+                <div class="form-check form-check-inline">
+                    <x-jet-label class="form-check-label" for="inlineRadio1" value="{{ __('男') }}" />
+                <x-jet-input id="inlineRadio1" class="form-check-input" type="radio" name="sex" value="0" required checked/>
+                
+                </div>
+                <div class="form-check form-check-inline">
+                       <x-jet-label class="form-check-label" for="inlineRadio2" value="{{ __('女') }}" />
+                <x-jet-input id="inlineRadio2" class="form-check-input" type="radio" name="sex" value="1" required />
+              
+                </div>
+                 
+            </div>
+
+              <div class="form-group @error('self_introduction')has-error @enderror">
+                <x-jet-label for="self_introduction" value="{{ __('自己紹介') }}" />
+                <textarea class="form-control" name="self_introduction" rows="10" placeholder="自己紹介" required></textarea>
+                @error('self_introduction')
+                  <span class="errorMessage">
+                 {{ $message }}
+                 </span>
+                 @enderror
+            </div>
             
 
             @if (Laravel\Jetstream\Jetstream::hasTermsAndPrivacyPolicyFeature())
@@ -83,15 +110,18 @@
                 </div>
             @endif
 
-            <div class="flex items-center justify-end mt-4">
+            <div class="text-center">
                 <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('login') }}">
                     {{ __('Already registered?') }}
                 </a>
-
-                <x-jet-button class="ml-4">
+<div class="linkToLogin">
+                <x-jet-button class="btn submitBtn texttext text-center" >
                     {{ __('Register') }}
                 </x-jet-button>
+                 </div>
+                  
             </div>
         </form>
     </x-jet-authentication-card>
+     </body>
 </x-guest-layout>
