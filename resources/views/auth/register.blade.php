@@ -28,13 +28,13 @@
 
              </label>
              <div class="userImgPreview" id="userImgPreview">
-             <img id="thumbnail" class="userImgPreview_content" accept="image/*" src="">
+             {{-- <img id="thumbnail" class="userImgPreview_content" accept="image/*" src=""> --}}
              <p class="userImgPreview_text">画像をアップロード済み</p>
              </div>
 
 
 
-            <div class="form-group @error('name')has-error @enderror">
+            <div class="block mt-1 w-full form-group @error('name')has-error @enderror">
                 <x-jet-label for="name" value="{{ __('Name') }}" />
                 <x-jet-input id="name" class="form-control" type="text" name="name" :value="old('name')" required autofocus autocomplete="name"  placeholder="名前を入力してください"/>
                 @error('name')
@@ -44,7 +44,7 @@
                 @enderror
             </div>
 
-            <div class="form-group @error('email')has-error @enderror">
+            <div class="block mt-1 w-full form-group @error('email')has-error @enderror">
                 <x-jet-label for="email" value="{{ __('Email') }}" />
                 
                 <x-jet-input id="email" class="form-control" type="email" name="email" :value="old('email')" required placeholder="メールアドレスを入力してください"/>
@@ -55,19 +55,19 @@
                 @enderror
             </div>
 
-            <div class="form-group @error('password')has-error @enderror">
+            <div class="block mt-1 w-full form-group @error('password')has-error @enderror">
                 <x-jet-label for="password" value="{{ __('Password') }}" />
                 <x-jet-input id="password" class="form-control" type="password" name="password" required autocomplete="new-password" 
                  placeholder="パスワードを入力してください"/>
             </div>
 
-            <div class="form-group">
+            <div class="block mt-1 w-full form-group">
                 <x-jet-label for="password_confirmation" value="{{ __('Confirm Password') }}" />
                 <x-jet-input id="password_confirmation" class="form-control" type="password" name="password_confirmation" required autocomplete="new-password" 
                 placeholder="パスワードを再度入力してください"/>
             </div>
 
-            <div class="form-group">
+            <div class="block mt-1 w-full form-group">
                 <x-jet-label for="sex" value="{{ __('性別') }}" />
                 <div class="form-check form-check-inline">
                     <x-jet-label class="form-check-label" for="inlineRadio1" value="{{ __('男') }}" />
@@ -82,9 +82,9 @@
                  
             </div>
 
-              <div class="form-group @error('self_introduction')has-error @enderror">
+              <div class="block mt-1 w-full form-group @error('self_introduction')has-error @enderror">
                 <x-jet-label for="self_introduction" value="{{ __('自己紹介') }}" />
-                <textarea class="form-control" name="self_introduction" rows="10" placeholder="自己紹介" required></textarea>
+                <textarea class="form-control" name="self_introduction" rows="8" placeholder="自己紹介" required></textarea>
                 @error('self_introduction')
                   <span class="errorMessage">
                  {{ $message }}
