@@ -10,25 +10,24 @@
     <x-jet-authentication-card>
         
         <x-slot name="logo">
-            {{-- 写真入れてロゴにできる --}}
-            
         </x-slot>
 
         <x-jet-validation-errors class="mb-4" />
 
-        <form method="POST" action="{{ route('register') }}">
+        <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
             @csrf
 
 
-
-             <label for="file_photo"        class="rounded-circle userProfileImg">
+            <div>
+             <label for="file_photo"        class="rounded-circle userProfileImg" >
+             <x-jet-input type="file" id="file_photo" name="img_name" />
              <div class="userProfileImg_description">画像をアップロード</div>
              <i class="fas fa-camera fa-3x"></i>
-             <input type="file" id="file_photo" name="img_name">
-
-             </label>
+             
+            </div>
+             
              <div class="userImgPreview" id="userImgPreview">
-             {{-- <img id="thumbnail" class="userImgPreview_content" accept="image/*" src=""> --}}
+             <img id="thumbnail" class="userImgPreview_content" accept="image/*" src="">
              <p class="userImgPreview_text">画像をアップロード済み</p>
              </div>
 

@@ -8,8 +8,9 @@ use Illuminate\Support\Facades\Validator;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
 use Laravel\Jetstream\Jetstream;
 use Intervention\Image\Facades\Image;
-use App\Services\CheckExtensionServices;
-use App\Services\FileUploadServices; 
+use Illuminate\Support\Facades\Storage;
+
+
 
 
 
@@ -33,24 +34,39 @@ class CreateNewUser implements CreatesNewUsers
             'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['required', 'accepted'] : '',
        'self_introduction' => ['string', 'max:255'],
            
-           'img_name' => ['file', 'image', 'mimes:jpeg,png,jpg,gif', 'max:2000'],
+           'img_name' => ['file','image', 'mimes:jpeg,png,jpg,gif,x-icon', 'max:2000'],
 
 
         ])->validate();
 
-        //引数 $data から name='img_name'を取得(アップロードするファイル情報)
-        $imageFile = $input['img_name'];
+        
+        $imageFile = $input->file('img_name');
+        $filenameWithExt = $imageFile->getClientOriginalName();
 
-        $list = FileUploadServices::fileUpload($imageFile);
-         list($extension, $fileNameToStore, $fileData) = $list;
-        $data_url = CheckExtensionServices::checkExtension($fileData, $extension); 
+        $fileName = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+        $extension = $imageFile->getClientOriginalExtension();
+        $fileNameToStore = $fileName.'_'.time().'.'.$extension;
+        $fileData = file_get_contents($imageFile->getRealPath());
+        if ($extension = 'jpg'){
+        $data_url = 'data:image/jpg;base64,'. base64_encode($fileData);
+        }
 
-        //画像アップロード(Imageクラス makeメソッドを使用)
+        if ($extension = 'jpeg'){
+        $data_url = 'data:image/jpg;base64,'. base64_encode($fileData);
+        }
+
+        if ($extension = 'png'){
+        $data_url = 'data:image/png;base64,'. base64_encode($fileData);
+        }
+
+        if ($extension = 'gif'){
+        $data_url = 'data:image/gif;base64,'. base64_encode($fileData);
+        }
+        if ($extension = 'x-icon'){
+        $data_url = 'data:image/x-icon;base64,'. base64_encode($fileData);
+        }
         $image = Image::make($data_url);
-
-        //画像を横400px, 縦400pxにリサイズし保存
         $image->resize(400,400)->save(storage_path() . '/app/public/images/' . $fileNameToStore );
-        // ---ここまで追加---
 
         return User::create([
             'name' => $input['name'],

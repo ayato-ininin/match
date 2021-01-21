@@ -3791,11 +3791,11 @@ module.exports = {
   \*****************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
+__webpack_require__(/*! ./users */ "./resources/js/users.js");
+
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 __webpack_require__(/*! alpinejs */ "./node_modules/alpinejs/dist/alpine.js");
-
-__webpack_require__(/*! ./users */ "./resources/js/users.js");
 
 /***/ }),
 
@@ -3836,7 +3836,8 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
   \*******************************/
 /***/ (() => {
 
-$(document).on("change", "#file_photo", function (e) {
+jQuery.noConflict();
+jQuery(document).on("change", "#file_photo", function (e) {
   var reader;
 
   if (e.target.files.length) {
@@ -3845,7 +3846,7 @@ $(document).on("change", "#file_photo", function (e) {
     reader.onload = function (e) {
       var userThumbnail;
       userThumbnail = document.getElementById('thumbnail');
-      $("#userImgPreview").addClass("is-active");
+      jQuery("#userImgPreview").addClass("is-active");
       userThumbnail.setAttribute('src', e.target.result);
     };
 

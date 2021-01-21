@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+
 class FileUploadServices
 {
   public static function fileUpload($imageFile){

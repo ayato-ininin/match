@@ -65,8 +65,9 @@
     align-items: center;
     justify-content: center;
      border-radius: 50%;
+    
   }
-  .userProfileImg:hover.userProfileImg_description {
+  .userProfileImg:hover .userProfileImg_description {
       opacity: 1;
     }
     .userProfileImg_description {
@@ -88,7 +89,7 @@
     display: none;
     text-align: center;
     }
-    .userImgPreview, .is-active{
+    .is-active{
       display:block;
      
     }
@@ -98,6 +99,7 @@
       padding: 10px;
       border: solid thin lightgray;
       border-radius: 5px;
+      margin:0 auto;
     }
     .userImgPreview_text {
       font-size: 11px;
