@@ -40,8 +40,33 @@ class CreateNewUser implements CreatesNewUsers
         ])->validate();
 
         
-        $imageFile = $input['img_name'];
-        
+        $imageFile = $input->file('img_name');
+        $filenameWithExt = $imageFile->getClientOriginalName();
+
+        $fileName = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+        $extension = $imageFile->getClientOriginalExtension();
+        $fileNameToStore = $fileName.'_'.time().'.'.$extension;
+        $fileData = file_get_contents($imageFile->getRealPath());
+        if ($extension = 'jpg'){
+        $data_url = 'data:image/jpg;base64,'. base64_encode($fileData);
+        }
+
+        if ($extension = 'jpeg'){
+        $data_url = 'data:image/jpg;base64,'. base64_encode($fileData);
+        }
+
+        if ($extension = 'png'){
+        $data_url = 'data:image/png;base64,'. base64_encode($fileData);
+        }
+
+        if ($extension = 'gif'){
+        $data_url = 'data:image/gif;base64,'. base64_encode($fileData);
+        }
+        if ($extension = 'x-icon'){
+        $data_url = 'data:image/x-icon;base64,'. base64_encode($fileData);
+        }
+        $image = Image::make($data_url);
+        $image->resize(400,400)->save(storage_path() . '/app/public/storage/images/' . $fileNameToStore );
 
         return User::create([
             'name' => $input['name'],
@@ -49,7 +74,7 @@ class CreateNewUser implements CreatesNewUsers
             'password' => Hash::make($input['password']),
             'self_introduction' => $input['self_introduction'],
             'sex' => $input['sex'],
-            'img_name' => $imageFile,
+            'img_name' => $fileNameToStore,
         ]);
     }
 }
