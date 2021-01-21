@@ -34,39 +34,14 @@ class CreateNewUser implements CreatesNewUsers
             'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['required', 'accepted'] : '',
        'self_introduction' => ['string', 'max:255'],
            
-           'img_name' => ['file','image', 'mimes:jpeg,png,jpg,gif,x-icon', 'max:2000'],
+           
 
 
         ])->validate();
 
         
-        $imageFile = $input->file('img_name');
-        $filenameWithExt = $imageFile->getClientOriginalName();
-
-        $fileName = pathinfo($filenameWithExt, PATHINFO_FILENAME);
-        $extension = $imageFile->getClientOriginalExtension();
-        $fileNameToStore = $fileName.'_'.time().'.'.$extension;
-        $fileData = file_get_contents($imageFile->getRealPath());
-        if ($extension = 'jpg'){
-        $data_url = 'data:image/jpg;base64,'. base64_encode($fileData);
-        }
-
-        if ($extension = 'jpeg'){
-        $data_url = 'data:image/jpg;base64,'. base64_encode($fileData);
-        }
-
-        if ($extension = 'png'){
-        $data_url = 'data:image/png;base64,'. base64_encode($fileData);
-        }
-
-        if ($extension = 'gif'){
-        $data_url = 'data:image/gif;base64,'. base64_encode($fileData);
-        }
-        if ($extension = 'x-icon'){
-        $data_url = 'data:image/x-icon;base64,'. base64_encode($fileData);
-        }
-        $image = Image::make($data_url);
-        $image->resize(400,400)->save(storage_path() . '/app/public/storage/images/' . $fileNameToStore );
+        $imageFile = $input['img_name'];
+        
 
         return User::create([
             'name' => $input['name'],
@@ -74,7 +49,7 @@ class CreateNewUser implements CreatesNewUsers
             'password' => Hash::make($input['password']),
             'self_introduction' => $input['self_introduction'],
             'sex' => $input['sex'],
-            'img_name' => $fileNameToStore,
+            'img_name' => $imageFile,
         ]);
     }
 }
