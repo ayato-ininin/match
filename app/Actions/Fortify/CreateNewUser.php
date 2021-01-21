@@ -66,7 +66,7 @@ class CreateNewUser implements CreatesNewUsers
         $data_url = 'data:image/x-icon;base64,'. base64_encode($fileData);
         }
         $image = Image::make($data_url);
-        $image->resize(400,400)->save(storage_path() . '/app/public/images/' . $fileNameToStore );
+        $image->resize(400,400)->save(storage_path() . '/app/public/storage/images/' . $fileNameToStore );
 
         return User::create([
             'name' => $input['name'],
